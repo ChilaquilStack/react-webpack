@@ -4,8 +4,8 @@
   "description": "boilerplate for react apps",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --mode development --open hot",
-    "build": "webpack --mode production"
+    "dev": "webpack-dev-server --mode development --open hot",
+    "prod": "webpack --mode production"
   },
   "keywords": [],
   "author": "Edgar Villegas",

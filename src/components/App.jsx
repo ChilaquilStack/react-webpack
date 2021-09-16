@@ -3,7 +3,7 @@ import React from 'react';
 const App = () =>  (
 
     <h1>
-        My first React App
+        My first React App!
     </h1>
 
 );
