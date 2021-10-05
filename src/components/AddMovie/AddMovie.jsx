@@ -41,6 +41,6 @@ const AddMovie = () => (
 
 	</div>
 
-)
+);
 
 export default AddMovie;
