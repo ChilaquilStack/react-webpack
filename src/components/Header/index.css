@@ -1,0 +1,12 @@
+.header {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-around;
+}
+
+.header_title {
+    display: flex;
+    color: #f65261;
+    justify-content: space-around;
+    background-color: transparent;
+}

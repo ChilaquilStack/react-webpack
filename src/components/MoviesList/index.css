@@ -1,0 +1,7 @@
+.Movie-List {
+    width: 75%;
+    display: flex;
+    margin: 0 auto;
+    flex-flow: wrap row;
+    justify-content: center;
+}
