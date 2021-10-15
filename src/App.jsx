@@ -12,6 +12,14 @@ import { useState } from 'react';
 const App = () =>  {
 
     const [title, setTitle] = useState('');
+    const [movie, setMovie] = useState({
+		url: '',
+		title: '',
+		genre: [],
+		runtime: '',
+		overview: '',
+		release_date: '',
+	});
     const [movies, setMovies] = useState([]);
     const [isOpen, setIsOpen] = useState(false);
 
@@ -21,11 +29,13 @@ const App = () =>  {
     }
     
     const addMovie = (movie) => {
-        setMovies([...movies, movie]);
+        setMovies([...movies, {...movie, id: Math.floor(Math.random() * 100)}]);
+        setIsOpen(false);
     }
     
-    const updateMovieModal = (movie) => {
-        setTitle('EDIT MOVIE')
+    const updateMovie = (movie) => {
+        setTitle('EDIT MOVIE');
+        setMovie(movie);
         setIsOpen(true);
     }
 
@@ -33,11 +43,11 @@ const App = () =>  {
         <ErrorBoundary>
             <Home>
                 <Modal isOpen={isOpen} setIsOpen={setIsOpen}>
-                    <AddMovie title={title} addMovie={addMovie}/>
+                    <AddMovie title={title} addMovie={addMovie} initialState={movie}/>
                 </Modal>
                 <Header setIsOpen={openMovieModal}/>
                 <FiltersBar/>
-                <MoviesList updateMovieModal={updateMovieModal} movies={movies}/>
+                <MoviesList updateMovie={updateMovie} movies={movies}/>
             </Home>
         </ErrorBoundary>
 

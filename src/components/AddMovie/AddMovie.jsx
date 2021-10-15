@@ -1,16 +1,9 @@
-import React, {useState} from 'react';
 import './index.css';
+import React, {useState} from 'react';
 
-const AddMovie = ({title, addMovie}) => {
+const AddMovie = ({title, addMovie, initialState}) => {
 
-	const [movie, setMovie] = useState({
-		url: '',
-		title: '',
-		genre: [],
-		runtime: '',
-		overview: '',
-		release_date: '',
-	});
+	const [movie, setMovie] = useState(initialState);
 
 	const handleChange = (event) => {
 		const genre = (event.target.name === 'genre') ? Array.from(event.target.selectedOptions, item => item.value) : [];
@@ -24,6 +17,7 @@ const AddMovie = ({title, addMovie}) => {
 	const handleSubmit = (event) => {
 		event.preventDefault();
 		addMovie(movie);
+		setMovie(initialState);
 	}
 
 	return (
@@ -34,63 +28,68 @@ const AddMovie = ({title, addMovie}) => {
 			
 			<form className="add_movie_form" onSubmit={handleSubmit}>
 
-			<label htmlFor="title">Title</label>
-			<input 
-				type="text" 
-				id="title" 
-				name="title" 
-				onChange={handleChange}
-			/>
+				<label htmlFor="title">Title</label>
+				<input 
+					type="text" 
+					id="title" 
+					name="title" 
+					value={movie.title}
+					onChange={handleChange}
+				/>
 
-			<label htmlFor="release_data">Release Date</label>
-			<input 
-				type="date" 
-				id="release-date" 
-				name="release_date" 
-				onChange={handleChange}
-			/>
+				<label htmlFor="release_data">Release Date</label>
+				<input 
+					type="date" 
+					id="release-date" 
+					name="release_date" 
+					onChange={handleChange}
+					value={movie.release_date}
+				/>
 
-			<label htmlFor="url">MOVIE URL</label>
-			<input 
-				type="text" 
-				id="url" 
-				name="url" 
-				placeholder="https://" 
-				onChange={handleChange}
-			/>
+				<label htmlFor="url">MOVIE URL</label>
+				<input 
+					id="url"
+					name="url"
+					type="text"
+					value={movie.url}
+					placeholder="https://"
+					onChange={handleChange}
+				/>
 
-			<label htmlFor="genre">GENRE</label>
-			<select name="genre" id="genre" multiple onChange={handleChange} value={movie.genre}>
-				<option value="Crime">Crime</option>
-				<option value="Documentary">Documentary</option>
-				<option value="Horror">Horror</option>
-				<option value="Comedy">Comedydsads</option>
-			</select>
+				<label htmlFor="genre">GENRE</label>
+				<select name="genre" id="genre" multiple onChange={handleChange} value={movie.genre}>
+					<option value="Crime">Crime</option>
+					<option value="Documentary">Documentary</option>
+					<option value="Horror">Horror</option>
+					<option value="Comedy">Comedydsads</option>
+				</select>
 
-			<label htmlFor="runtime">RUNTIME</label>
-			<input 
-				type="text" 
-				placeholder="minutes" 
-				name="runtime" 
-				id="runtime" 
-				onChange={handleChange}
-			/>
+				<label htmlFor="runtime">RUNTIME</label>
+				<input
+					type="text"
+					id="runtime"
+					name="runtime"
+					value={movie.runtime}
+					placeholder="minutes" 
+					onChange={handleChange}
+				/>
 
-			<label htmlFor="overview">Overview</label>
-			<textarea 
-				name="overview" 
-				id="overview" 
-				cols="30" 
-				rows="10" 
-				placeholder="Movie description" 
-				onChange={handleChange}
-			>
-			</textarea>
+				<label htmlFor="overview">Overview</label>
+				<textarea 
+					cols="30"
+					rows="10"
+					id="overview"
+					name="overview"
+					value={movie.overview}
+					onChange={handleChange}
+					placeholder="Movie description"
+				>
+				</textarea>
 
-			<div>
-				<button>RESET</button>
-				<button>SUBMIT</button>
-			</div>
+				<div>
+					<button>RESET</button>
+					<button>SUBMIT</button>
+				</div>
 
 			</form>
 

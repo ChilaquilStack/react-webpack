@@ -1,16 +1,11 @@
+import './index.css';
 import React from 'react';
 import MovieCard from '../MovieCard/MovieCard.jsx';
-import './index.css';
 
-const MoviesList = ({movies, updateMovieModal}) => {
-
-    return(
-        <div className="Movie-List">
-            {movies.map((movie,index) => <MovieCard movie={movie} key={index} updateMovieModal={updateMovieModal}/>)}    
-        </div>
-    )
-
-}
-
+const MoviesList = ({movies, updateMovie}) => (
+    <div className="Movie-List">
+        {movies.map(movie => <MovieCard movie={movie} key={movie.id} updateMovie={updateMovie}/>)}    
+    </div>
+);
 
 export default MoviesList;
