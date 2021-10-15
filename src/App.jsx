@@ -29,8 +29,12 @@ const App = () =>  {
     }
     
     const addMovie = (movie) => {
-        setMovies([...movies, {...movie, id: Math.floor(Math.random() * 100)}]);
+        setMovies([...movies, { ...movie, id: Math.floor(Math.random() * 100) }]);
         setIsOpen(false);
+    }
+    
+    const deleteMovie = ({id}) => {
+        setMovies(movies.filter(movie => movie.id !== id));
     }
     
     const updateMovie = (movie) => {
@@ -47,7 +51,11 @@ const App = () =>  {
                 </Modal>
                 <Header setIsOpen={openMovieModal}/>
                 <FiltersBar/>
-                <MoviesList updateMovie={updateMovie} movies={movies}/>
+                <MoviesList 
+                    movies={movies}
+                    deleteMovie={deleteMovie}
+                    updateMovie={updateMovie} 
+                />
             </Home>
         </ErrorBoundary>
 

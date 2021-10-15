@@ -2,7 +2,7 @@ import './index.css';
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const MovieCard = ({movie, updateMovie}) => {
+const MovieCard = ({movie, updateMovie, deleteMovie}) => {
 
     return (
         <div className="card">
@@ -10,7 +10,9 @@ const MovieCard = ({movie, updateMovie}) => {
                 <div className="card-menu-item">
                     <span onClick={() => updateMovie(movie)}>Edit</span>
                 </div>
-                <div className="card-menu-item">Delete</div>
+                <div className="card-menu-item">
+                    <span onClick={() => deleteMovie(movie)}>DELETE</span>
+                </div>
             </div>
             <img src={movie.src} alt={movie.title} className="card-image"/>
             <div className="card-footer">
