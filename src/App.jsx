@@ -24,6 +24,14 @@ const App = () =>  {
     const [isOpen, setIsOpen] = useState(false);
 
     const openMovieModal = () => {
+        setIsOpen({
+            url: '',
+            title: '',
+            genre: [],
+            runtime: '',
+            overview: '',
+            release_date: '',
+        })
         setTitle('ADD MOVIE');
         setIsOpen(true);
     }
@@ -38,10 +46,15 @@ const App = () =>  {
     }
     
     const updateMovie = (movie) => {
+        console.log({movie})
         setTitle('EDIT MOVIE');
         setMovie(movie);
         setIsOpen(true);
     }
+
+    React.useEffect(() => {
+        console.log('App');
+    })
 
     return (
         <ErrorBoundary>

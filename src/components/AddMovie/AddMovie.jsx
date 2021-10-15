@@ -5,6 +5,10 @@ const AddMovie = ({title, addMovie, initialState}) => {
 
 	const [movie, setMovie] = useState(initialState);
 
+	React.useEffect(() => {
+		setMovie(initialState);
+	},[initialState])
+
 	const handleChange = (event) => {
 		const genre = (event.target.name === 'genre') ? Array.from(event.target.selectedOptions, item => item.value) : [];
 		setMovie({
