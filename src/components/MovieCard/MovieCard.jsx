@@ -2,7 +2,14 @@ import './index.css';
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const MovieCard = ({movie, updateMovie, deleteMovie}) => {
+const MovieCard = ({
+    movie, 
+    showMovie,
+    updateMovie, 
+    deleteMovie
+}) => {
+
+    console.log('CardMovie component')
 
     return (
         <div className="card">
@@ -14,7 +21,7 @@ const MovieCard = ({movie, updateMovie, deleteMovie}) => {
                     <span onClick={() => deleteMovie(movie)}>DELETE</span>
                 </div>
             </div>
-            <img src={movie.src} alt={movie.title} className="card-image"/>
+            <img src={movie.src} alt={movie.title} className="card-image" onClick={() => showMovie(movie)} />
             <div className="card-footer">
                 <span>...</span>
                 <p>{movie.title}</p>

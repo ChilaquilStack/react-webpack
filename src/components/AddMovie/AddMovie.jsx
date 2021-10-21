@@ -14,6 +14,7 @@ const AddMovie = ({title, addMovie, initialState}) => {
 		setMovie({
 			...movie,
 			[event.target.name] : event.target.value,
+			src: 'https://placeimg.com/640/480/people',
 			genre
 		});
 	}
