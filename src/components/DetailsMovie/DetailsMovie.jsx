@@ -1,14 +1,24 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 
-const DetailsMovie = ({movie, setShowDetailsMovie}) => {
-    const {title, src, rating, overview, genre, release_data, runtime} = movie;
+const DetailsMovie = ({setShowDetailsMovie}) => {
+
+    const {
+        title,
+        rating,
+        runtime,
+        overview, 
+        poster_path,
+        release_data,
+    } = useSelector(state => state.movies.movie);
+    
     return(
         <div className="movie">
             <button className="header_button">
                 <span onClick={() => setShowDetailsMovie(false)}>Search Button</span>
             </button>
             <div className="movie__image">
-                <img src={src} alt={title} />
+                <img src={poster_path} alt={title} />
             </div>
             <div className="movie__title">
                 {title} - {rating}

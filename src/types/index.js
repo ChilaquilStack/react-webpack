@@ -1,8 +1,8 @@
 export const Movie = {
-    url: '',
     title: '',
-    genre: [],
-    runtime: '',
+    poster_path: '',
+    genres: [],
+    runtime: 0,
     overview: '',
     release_date: '',
 }

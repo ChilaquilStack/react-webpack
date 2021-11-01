@@ -1,28 +1,43 @@
 import './index.css';
-import React, {useState} from 'react';
+import React, { useState } from 'react';
+import { postMovie, updateMovie, MOVIES } from '../../reducers/Movies.js'
+import { useDispatch, useSelector } from 'react-redux'
 
-const AddMovie = ({title, addMovie, initialState}) => {
+const AddMovie = () => {
 
-	const [movie, setMovie] = useState(initialState);
-
-	React.useEffect(() => {
-		setMovie(initialState);
-	},[initialState])
+	const dispatch = useDispatch();
+	
+	const {title} = useSelector(state => state.modal)
+	
+	const {movie} = useSelector(state => state.movies);
 
 	const handleChange = (event) => {
-		const genre = (event.target.name === 'genre') ? Array.from(event.target.selectedOptions, item => item.value) : [];
-		setMovie({
+		
+		const genres = (event.target.name === 'genres') 
+			? Array.from(event.target.selectedOptions, item => item.value) 
+			: movie.genres;
+		
+		const runtime = (event.target.name === 'runtime') 
+			? Number(event.target.value)
+			: movie.runtime
+		
+		const poster_path = movie.poster_path || 'https://placeimg.com/640/480/people'
+
+		dispatch(MOVIES.SHOW({movie: {
 			...movie,
 			[event.target.name] : event.target.value,
-			src: 'https://placeimg.com/640/480/people',
-			genre
-		});
+			genres,
+			runtime,
+			poster_path
+		}}));
 	}
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
-		addMovie(movie);
-		setMovie(initialState);
+		if(title === 'ADD MOVIE')
+			dispatch(postMovie(movie));
+		if(title === 'EDIT MOVIE')
+			dispatch(updateMovie(movie));
 	}
 
 	return (
@@ -56,13 +71,19 @@ const AddMovie = ({title, addMovie, initialState}) => {
 					id="url"
 					name="url"
 					type="text"
-					value={movie.url}
+					value={movie.poster_path}
 					placeholder="https://"
 					onChange={handleChange}
 				/>
 
-				<label htmlFor="genre">GENRE</label>
-				<select name="genre" id="genre" multiple onChange={handleChange} value={movie.genre}>
+				<label htmlFor="genres">GENRES</label>
+				<select
+					name="genres"
+					id="genres"
+					multiple
+					onChange={handleChange}
+					value={movie.genres}
+				>
 					<option value="Crime">Crime</option>
 					<option value="Documentary">Documentary</option>
 					<option value="Horror">Horror</option>
@@ -71,7 +92,7 @@ const AddMovie = ({title, addMovie, initialState}) => {
 
 				<label htmlFor="runtime">RUNTIME</label>
 				<input
-					type="text"
+					type="number"
 					id="runtime"
 					name="runtime"
 					value={movie.runtime}
