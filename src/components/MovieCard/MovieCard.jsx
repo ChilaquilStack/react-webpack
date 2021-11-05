@@ -2,13 +2,8 @@ import './index.css';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
-import {
-    deleteMovie,
-    showMovies,
-} from '../../reducers/Movies';
-import {
-    MODAL
-} from '../../reducers/Modal'
+import { showMovies } from '../../reducers/Movies';
+import { MODAL } from '../../reducers/Modal'
 
 const MovieCard = ({
     movie,
@@ -21,26 +16,26 @@ const MovieCard = ({
         dispatch(showMovies(movie))
         showMovie();
     }
-
-    const handleEditMovie = (movie) => {
+    
+    const handleClick = (movie, title) => {
         dispatch(showMovies(movie))
-        dispatch(MODAL.OPEN({title: 'EDIT MOVIE'}))
+        dispatch(MODAL.OPEN({title}))
     }
 
     return (
         <div className="card">
             <div className="card-menu">
                 <div className="card-menu-item">
-                    <span onClick={() => handleEditMovie(movie)}>Edit</span>
+                    <span onClick={() => handleClick(movie, 'EDIT MOVIE')}>Edit</span>
                 </div>
                 <div className="card-menu-item">
-                    <span onClick={() => dispatch(deleteMovie(movie))}>DELETE</span>
+                    <span onClick={() => handleClick(movie, 'DELETE MOVIE')}>DELETE</span>
                 </div>
             </div>
             <img 
-                src={movie.poster_path} 
-                alt={movie.title} 
-                className="card-image" 
+                alt={movie.title}
+                className="card-image"
+                src={movie.poster_path}
                 onClick={() => handleShowMovie(movie)} 
             />
             <div className="card-footer">

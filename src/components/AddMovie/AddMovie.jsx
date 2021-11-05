@@ -1,125 +1,119 @@
 import './index.css';
-import React, { useState } from 'react';
-import { postMovie, updateMovie, MOVIES } from '../../reducers/Movies.js'
-import { useDispatch, useSelector } from 'react-redux'
+import * as Yup from 'yup';
+import { useFormik } from 'formik';
+import React from 'react';
+import { useSelector, useDispatch} from 'react-redux'
 
-const AddMovie = () => {
+const AddMovie = ({onSubmit}) => {
 
 	const dispatch = useDispatch();
 	
-	const {title} = useSelector(state => state.modal)
-	
-	const {movie} = useSelector(state => state.movies);
+	const {movie: initialValues} = useSelector(state => state.movies);
 
-	const handleChange = (event) => {
-		
-		const genres = (event.target.name === 'genres') 
-			? Array.from(event.target.selectedOptions, item => item.value) 
-			: movie.genres;
-		
-		const runtime = (event.target.name === 'runtime') 
-			? Number(event.target.value)
-			: movie.runtime
-		
-		const poster_path = movie.poster_path || 'https://placeimg.com/640/480/people'
-
-		dispatch(MOVIES.SHOW({movie: {
-			...movie,
-			[event.target.name] : event.target.value,
-			genres,
-			runtime,
-			poster_path
-		}}));
-	}
-
-	const handleSubmit = (event) => {
-		event.preventDefault();
-		if(title === 'ADD MOVIE')
-			dispatch(postMovie(movie));
-		if(title === 'EDIT MOVIE')
-			dispatch(updateMovie(movie));
-	}
+	const formik = useFormik({
+		enableReinitialize: true,
+		initialValues,
+		onSubmit: values => {
+			dispatch(onSubmit(values))
+		},
+		validationSchema: Yup.object({
+			title: Yup.string().max(15, 'Must be 15 characters on less').required('Required'),
+			release_date: Yup.date().required('Required'),
+			poster_path: Yup.string().required('Required'),
+			genres: Yup.array().required('Required'),
+			runtime: Yup.number().required('Required'),
+			overview: Yup.string().required('Required'),
+			release_date: Yup.date().required('Required'),
+		})
+	})
 
 	return (
-	
-		<div className="add_movie">
 
-			<h1>{title}</h1>
-			
-			<form className="add_movie_form" onSubmit={handleSubmit}>
+		<form className="add_movie_form" onSubmit={formik.handleSubmit}>
+			<label htmlFor="title">Title</label>
+			<input 
+				type="text" 
+				id="title" 
+				name="title" 
+				onBlur={formik.handleBlur}
+				value={formik.values.title}
+				onChange={formik.handleChange}
+			/>
+			{ formik.errors.title && <p>{formik.errors.title}</p> }
 
-				<label htmlFor="title">Title</label>
-				<input 
-					type="text" 
-					id="title" 
-					name="title" 
-					value={movie.title}
-					onChange={handleChange}
-				/>
+			<label htmlFor="release_data">Release Date</label>
+			<input
+				type="date" 
+				id="release-date" 
+				name="release_date" 
+				onBlur={formik.handleBlur}
+				onChange={formik.handleChange}
+				value={formik.values.release_date}
+			/>
+			{ formik.errors.release_date && <p>{formik.errors.release_date}</p> }
 
-				<label htmlFor="release_data">Release Date</label>
-				<input 
-					type="date" 
-					id="release-date" 
-					name="release_date" 
-					onChange={handleChange}
-					value={movie.release_date}
-				/>
+			<label htmlFor="url">MOVIE URL</label>
+			<input 
+				type="text"
+				id="poster_path"
+				name="poster_path"
+				placeholder="https://"
+				onBlur={formik.handleBlur}
+				onChange={formik.handleChange}
+				value={formik.values.poster_path}
+			/>
+			{ formik.errors.poster_path && <p>{formik.errors.poster_path}</p> }
 
-				<label htmlFor="url">MOVIE URL</label>
-				<input 
-					id="url"
-					name="url"
-					type="text"
-					value={movie.poster_path}
-					placeholder="https://"
-					onChange={handleChange}
-				/>
 
-				<label htmlFor="genres">GENRES</label>
-				<select
-					name="genres"
-					id="genres"
-					multiple
-					onChange={handleChange}
-					value={movie.genres}
-				>
-					<option value="Crime">Crime</option>
-					<option value="Documentary">Documentary</option>
-					<option value="Horror">Horror</option>
-					<option value="Comedy">Comedydsads</option>
-				</select>
+			<label htmlFor="genres">GENRES</label>
+			<select
+				multiple
+				id="genres"
+				name="genres"
+				onBlur={formik.handleBlur}
+				value={formik.values.genres}
+				onChange={formik.handleChange}
+			>
+				<option value="Crime">Crime</option>
+				<option value="Documentary">Documentary</option>
+				<option value="Horror">Horror</option>
+				<option value="Comedy">Comedydsads</option>
+			</select>
+			{ formik.errors.genres && <p>{formik.errors.genres}</p> }
 
-				<label htmlFor="runtime">RUNTIME</label>
-				<input
-					type="number"
-					id="runtime"
-					name="runtime"
-					value={movie.runtime}
-					placeholder="minutes" 
-					onChange={handleChange}
-				/>
+			<label htmlFor="runtime">RUNTIME</label>
+			<input
+				type="number"
+				id="runtime"
+				name="runtime"
+				placeholder="minutes" 
+				onBlur={formik.handleBlur}
+				value={formik.values.runtime}
+				onChange={formik.handleChange}
+			/>
+			{ formik.errors.runtime && <p>{formik.errors.runtime}</p> }
 
-				<label htmlFor="overview">Overview</label>
-				<textarea 
-					cols="30"
-					rows="10"
-					id="overview"
-					name="overview"
-					value={movie.overview}
-					onChange={handleChange}
-					placeholder="Movie description"
-				>
-				</textarea>
 
-				<div>
-					<button>RESET</button>
-					<button>SUBMIT</button>
-				</div>
+			<label htmlFor="overview">Overview</label>
+			<textarea 
+				cols="30"
+				rows="10"
+				id="overview"
+				name="overview"
+				onBlur={formik.handleBlur}
+				value={formik.values.overview}
+				onChange={formik.handleChange}
+				placeholder="Movie description"
+			>
+			</textarea>
+			{ formik.errors.overview && <p>{formik.errors.overview}</p> }
 
-			</form>
-
-		</div>
+			<div>
+				<button>RESET</button>
+				<button>SUBMIT</button>
+			</div>
+		
+		</form>
 
 	);
 

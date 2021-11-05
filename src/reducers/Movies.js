@@ -2,6 +2,8 @@ import { Movie as TMovie} from '../types/index.js';
 
 import { createAction, createReducer } from '@reduxjs/toolkit'
 
+import { MODAL } from './Modal.js'
+
 export const MOVIES = {
     GET: createAction('movies/get'),
     ADD: createAction('movies/create'),
@@ -45,6 +47,7 @@ export const postMovie = movie => async dispatch => {
         });
         const data = await response.json();
         dispatch(MOVIES.ADD({movie: data}));
+        dispatch(MODAL.CLOSE());
     } catch(e) {
         dispatch(MOVIES.ERROR({error: e.message}))
     }
@@ -59,6 +62,7 @@ export const deleteMovie = movie => async dispatch => {
             }
         })
         dispatch(MOVIES.REMOVE({id: movie.id}))
+        dispatch(MODAL.CLOSE());
     } catch (error) {
         dispatch(MOVIES.ERROR({error}))
     }
@@ -76,6 +80,7 @@ export const updateMovie = (movie) => async dispatch => {
         })
         const data = await response.json()
         dispatch(MOVIES.UPDATE({movie: data}))
+        dispatch(MODAL.CLOSE());
     } catch(error) {
         dispatch(MOVIES.ERROR({error: error.message}))
     }

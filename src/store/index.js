@@ -5,7 +5,7 @@ import moviesReducer from '../reducers/Movies.js';
 
 export default configureStore({
     reducer: {
+        modal: modalReducer,
         movies: moviesReducer,
-        modal: modalReducer
     }
 })
