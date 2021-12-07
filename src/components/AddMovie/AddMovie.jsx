@@ -110,7 +110,13 @@ const AddMovie = ({onSubmit}) => {
 
 			<div>
 				<button>RESET</button>
-				<button>SUBMIT</button>
+				<button 
+					name="submit"
+					id="submit"
+					data-testid="submit"
+				>
+					SUBMIT
+				</button>
 			</div>
 		
 		</form>

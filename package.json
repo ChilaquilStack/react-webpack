@@ -4,8 +4,9 @@
   "description": "boilerplate for react apps",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack-dev-server --mode development --open hot",
-    "prod": "webpack --mode production"
+    "test": "jest --coverage --env=jsdom",
+    "prod": "webpack --mode production",
+    "dev": "webpack-dev-server --mode development --open hot"
   },
   "keywords": [],
   "author": "Edgar Villegas",
@@ -13,9 +14,12 @@
   "dependencies": {
     "@babel/runtime": "^7.15.4",
     "@reduxjs/toolkit": "^1.6.2",
+    "@wdio/cli": "^7.16.10",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-redux": "^7.2.5",
+    "react-router-dom": "^6.0.2",
+    "react-test-renderer": "^17.0.2",
     "yup": "^0.32.11"
   },
   "devDependencies": {
@@ -24,12 +28,21 @@
     "@babel/plugin-transform-runtime": "^7.15.8",
     "@babel/preset-env": "^7.15.6",
     "@babel/preset-react": "^7.14.5",
+    "@babel/register": "^7.16.0",
+    "@testing-library/jest-dom": "^5.16.1",
+    "@testing-library/react": "^12.1.2",
+    "@wdio/local-runner": "^7.16.10",
+    "@wdio/mocha-framework": "^7.16.6",
+    "@wdio/spec-reporter": "^7.16.9",
     "babel-loader": "^8.2.2",
+    "chromedriver": "^96.0.0",
     "css-loader": "^6.3.0",
     "formik": "^2.2.9",
     "html-webpack-plugin": "^5.3.2",
+    "jest": "^27.4.3",
     "style-loader": "^3.3.0",
     "url-loader": "^4.1.1",
+    "wdio-chromedriver-service": "^7.2.2",
     "webpack": "^5.52.1",
     "webpack-cli": "^4.8.0",
     "webpack-dev-server": "^4.2.0"
